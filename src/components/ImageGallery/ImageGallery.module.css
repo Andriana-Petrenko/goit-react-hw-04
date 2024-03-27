@@ -1,0 +1,18 @@
+.gallery_list{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    gap: 24px;
+    justify-content: flex-start;
+}
+.gallery_item {
+    width: calc((100% - 48px) / 3);
+    /* border: 1px solid #808080;
+    border-radius: 4px; */
+    transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.gallery_item:hover,
+.gallery_item:focus {
+    transform: scale(1.04);
+}

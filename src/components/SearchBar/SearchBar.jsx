@@ -10,7 +10,6 @@ const handleOnSubmit = (event) => {
               return;
           }
     onSubmit(inputSearch); 
-    form.reset();
   }
 
   return (

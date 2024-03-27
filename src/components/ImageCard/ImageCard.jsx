@@ -1,8 +1,12 @@
-const ImageCard = () => {
+import css from "./ImageCard.module.css"
+
+const ImageCard = ({ url, description }) => {
   return (
-    <div>
-  <img src="" alt="" />
-</div>
+      <div>
+          <img className={css.gallery_image} src={url} alt={description} />
+      </div>
+  
+
 
   )
 }
