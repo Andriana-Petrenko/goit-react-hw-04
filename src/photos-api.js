@@ -11,6 +11,5 @@ export async function fetchPhotosByInput (inputSearch,page) {
     },
   });
   const photos = response.data;
-
   return photos;
 }

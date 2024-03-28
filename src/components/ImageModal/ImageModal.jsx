@@ -1,9 +1,33 @@
-import  css  from "./ImageModal.module.css"
+import  "./ImageModal.module.css"
+import Modal from 'react-modal';
 
-const ImageModal = ({onClose}) => {
+const customStyles = {
+    content: {
+        top: '50%',
+        left: '50%',
+        right: 'auto',
+        bottom: 'auto',
+        marginRight: '-50%',
+        transform: 'translate(-50%, -50%)',
+    },
+};
+
+Modal.setAppElement('#root');
+
+const ImageModal = ({onClose, urlModal,isOpen,description}) => {
   return (
-      <div className={ css.backdrop} onClick={onClose}>ImageModal</div>
+    <Modal
+        isOpen={isOpen}
+        onRequestClose={onClose}
+        contentLabel="Large Image Modal"
+          style={customStyles}
+          overlayClassName="Overlay"
+    >
+        <img src={urlModal} alt={description} />
+    </Modal>
   )
 }
 
 export default ImageModal
+
+

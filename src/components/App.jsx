@@ -6,7 +6,6 @@ import ImageGallery from "./ImageGallery/ImageGallery.jsx";
 import { fetchPhotosByInput } from "../photos-api.js";
 import LoadMoreBtn from "./LoadMoreBtn/LoadMoreBtn.jsx";
 import ImageModal from "./ImageModal/ImageModal.jsx";
-// import Modal from 'react-modal';
 
 //   const customStyles = {
 //   content: {
@@ -26,8 +25,9 @@ const App = () => {
   const [inputSearch, setInputSearch] = useState("");
   const [page, setPage] = useState(1);
   const [showBtn, setShowBtn] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-   
+  const [imageSrc, setImageSrc] = useState(null);
+  const [description, setDescription]=useState(null);
+  
 useEffect(() => {
     if (!inputSearch) return;
     async function fetchPhotos()  {
@@ -58,9 +58,12 @@ const onClickButton = () => {
   setPage(prevPage => prevPage + 1);
 }
 
-  const openModal = () => setIsModalOpen(true);
+  const openModal = (urlModal,description) => {
+    setImageSrc(urlModal);
+    setDescription(description);
+  };
 
-  const closeModal = () => setIsModalOpen(false);
+  const closeModal = () => {setImageSrc(null)};
 
   return (
     <>
@@ -69,7 +72,7 @@ const onClickButton = () => {
       {error && <ErrorMessage />}
       {photos.length !== 0 && <ImageGallery photos={photos} openModal={openModal} />}
       {showBtn && <LoadMoreBtn onClickButton={onClickButton} />}
-      <ImageModal isOpen={isModalOpen} onClose={closeModal} photos={photos}/>
+      <ImageModal isOpen={imageSrc !== null} onClose={closeModal} urlModal={imageSrc} description={description} />
     </>
   );
 };
