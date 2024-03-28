@@ -63,14 +63,14 @@ const onClickButton = () => {
   const closeModal = () => setIsModalOpen(false);
 
   return (
-    <div>
+    <>
       <SearchBar onSubmit={onSubmit} />
       {loading && <Loader />}
       {error && <ErrorMessage />}
       {photos.length !== 0 && <ImageGallery photos={photos} openModal={openModal} />}
       {showBtn && <LoadMoreBtn onClickButton={onClickButton} />}
       <ImageModal isOpen={isModalOpen} onClose={closeModal} photos={photos}/>
-    </div>
+    </>
   );
 };
 export default App

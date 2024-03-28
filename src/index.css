@@ -11,14 +11,13 @@
 
 body {
   margin: 0;
-  display: flex;
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
-  color: #0b0c0b;
-  background-image: url(./img/wp13296761-phone-book-wallpapers.jpg);
+  color: #090423;
   background-size: cover;
   background-position: right bottom 30%;
+  background: linear-gradient(269deg, #10d2eb66 0%, #e260e22d 80%);
 }
 
 h1,h2,p {
