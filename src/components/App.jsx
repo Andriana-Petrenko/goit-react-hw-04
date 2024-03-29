@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState} from "react";
 import SearchBar from './SearchBar/SearchBar.jsx';
 import Loader from "./Loader/Loader.jsx";
 import ErrorMessage from "./ErrorMessage/ErrorMessage.jsx";
@@ -7,16 +7,6 @@ import { fetchPhotosByInput } from "../photos-api.js";
 import LoadMoreBtn from "./LoadMoreBtn/LoadMoreBtn.jsx";
 import ImageModal from "./ImageModal/ImageModal.jsx";
 
-//   const customStyles = {
-//   content: {
-//     top: '50%',
-//     left: '50%',
-//     right: 'auto',
-//     bottom: 'auto',
-//     marginRight: '-50%',
-//     transform: 'translate(-50%, -50%)',
-//   },
-//   };
 
 const App = () => {
   const [photos, setPhotos] = useState([]);
@@ -28,6 +18,7 @@ const App = () => {
   const [imageSrc, setImageSrc] = useState(null);
   const [description, setDescription]=useState(null);
   
+
 useEffect(() => {
     if (!inputSearch) return;
     async function fetchPhotos()  {
@@ -37,7 +28,6 @@ useEffect(() => {
       const {total_pages,results}=await fetchPhotosByInput(inputSearch, page);
       setPhotos((prevPhotos) => [...prevPhotos, ...results]);
       setShowBtn(total_pages > page);
-      
     } catch (error) {
       setError(true)
     } finally {
