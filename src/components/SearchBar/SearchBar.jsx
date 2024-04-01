@@ -21,7 +21,7 @@ const handleOnSubmit = (event) => {
   }
 
   return (
-<header className={css.header_search}>
+<header className={css.header_search} id="header">
     <form className={css.form} onSubmit ={handleOnSubmit}>
        <input className={css.input_search} type="text" autoComplete="off" autoFocus  placeholder="Search images and photos" name="search"/>
        <button className={css.btn_search} type="submit"><FaSearch  size='16' fill='#010147'/></button>

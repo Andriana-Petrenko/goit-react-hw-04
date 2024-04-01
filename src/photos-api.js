@@ -1,5 +1,5 @@
 import axios from "axios";
-let perPage = 200;
+let perPage = 15;
 
 export async function fetchPhotosByInput (inputSearch,page) {
    const ACCESS_KEY = 'Lo9uorFXpgT_Y7XkOmyvCmdEbDFs7mI4M-i24Hz4fks';

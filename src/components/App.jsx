@@ -1,4 +1,4 @@
-import { useEffect, useState} from "react";
+import { useEffect, useState, useRef} from "react";
 import SearchBar from './SearchBar/SearchBar.jsx';
 import Loader from "./Loader/Loader.jsx";
 import ErrorMessage from "./ErrorMessage/ErrorMessage.jsx";
@@ -6,6 +6,8 @@ import ImageGallery from "./ImageGallery/ImageGallery.jsx";
 import { fetchPhotosByInput } from "../photos-api.js";
 import LoadMoreBtn from "./LoadMoreBtn/LoadMoreBtn.jsx";
 import ImageModal from "./ImageModal/ImageModal.jsx";
+import ScrollIntoView from 'react-scroll-into-view'
+import ScrollUp from "./ScrollUp/ScrollUp.jsx";
 
 
 const App = () => {
@@ -16,8 +18,9 @@ const App = () => {
   const [page, setPage] = useState(1);
   const [showBtn, setShowBtn] = useState(false);
   const [imageSrc, setImageSrc] = useState(null);
-  const [description, setDescription]=useState(null);
-  
+  const [description, setDescription] = useState(null);
+  const [scrollBtn, setScrollBtn] = useState(false);
+  const lastImageRef = useRef(null);
 
 useEffect(() => {
     if (!inputSearch) return;
@@ -27,6 +30,7 @@ useEffect(() => {
       setError(false);
       const {total_pages,results}=await fetchPhotosByInput(inputSearch, page);
       setPhotos((prevPhotos) => [...prevPhotos, ...results]);
+      
       setShowBtn(total_pages > page);
     } catch (error) {
       setError(true)
@@ -34,9 +38,11 @@ useEffect(() => {
       setLoading(false);
       }
     }
-    fetchPhotos();
-  }, [inputSearch,page])
-
+  fetchPhotos();
+  scrollToLastImage();
+    
+}, [inputSearch, page])
+  
 const onSubmit = (inputSearch) => {
   setInputSearch(inputSearch);
   setPhotos([]);
@@ -44,26 +50,43 @@ const onSubmit = (inputSearch) => {
   setShowBtn(false);
 }
 
-const onClickButton = () => {
-  setPage(prevPage => prevPage + 1);
-}
+const scrollToLastImage = () => {
+  if (lastImageRef.current) {
+  lastImageRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+   }
+};
+  const onClickButton = () => {
+    setPage((prevPage) => prevPage + 1);
+    setScrollBtn(true);
+  };
 
   const openModal = (urlModal,description) => {
     setImageSrc(urlModal);
     setDescription(description);
   };
 
-  const closeModal = () => {setImageSrc(null)};
+  const closeModal = () => {
+    setImageSrc(null)
+  };
+
+
+  const onScrollBtn = () => {
+    setScrollBtn(false)
+  };
 
   return (
     <>
       <SearchBar onSubmit={onSubmit} />
       {loading && <Loader />}
       {error && <ErrorMessage />}
-      {photos.length !== 0 && <ImageGallery photos={photos} openModal={openModal} />}
+      {photos.length !== 0 && <ImageGallery photos={photos} openModal={openModal} lastImageRef={lastImageRef}  onClickButton={onClickButton} />}
       {showBtn && <LoadMoreBtn onClickButton={onClickButton} />}
       <ImageModal isOpen={imageSrc !== null} onClose={closeModal} urlModal={imageSrc} description={description} />
+      {scrollBtn && <ScrollIntoView selector="#header"><ScrollUp onScrollBtn={onScrollBtn} /></ScrollIntoView>}
+    
     </>
   );
 };
 export default App
+
+
